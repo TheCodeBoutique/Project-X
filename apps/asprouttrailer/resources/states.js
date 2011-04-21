@@ -120,10 +120,6 @@ SC.mixin(Asprouttrailer, {
 
 			var movieString = location + title;
 
-
-			//console.log(removeLabel);
-			//console.log(movieString);
-
 			//moviewURL.toString();
 			 //moviewURL.replace("/trailers", "");
 				var movie = "<video " + "id=sproutPlayer" + " controls='controls' class='video' x-webkit-airplay='allow' width='640' height='272' " + poster +' autoplay="autoplay" bgcolor="black">'+ 
@@ -141,7 +137,7 @@ SC.mixin(Asprouttrailer, {
 				
 				var count = Asprouttrailer.trailerPlayer.get('content');
 				var m = count.get('length');
-				console.log(m);
+	
 				
 				var curSelection = Asprouttrailer.trailerPlayer.get('selection');
 				
@@ -150,8 +146,7 @@ SC.mixin(Asprouttrailer, {
 				var newCommittee = count.toArray();
 				var ne = newCommittee.indexOf(curSelection); 
 				
-				console.log(num);
-				console.log(ne);
+
 				
 			Asprouttrailer.trailerPlayerSelection.set('currentTrailerPlaying',movie);
 			
@@ -165,18 +160,17 @@ SC.mixin(Asprouttrailer, {
 			Asprouttrailer.mostPopularController.set("mostPopularSearch",''); //remove what we enter for query
 			
 			var set = SC.Set.create(content);
-			console.log(set);
+	
 					
 			set.get('isEnumerable');
 			
-			console.log(set);
+
 			
 			set.findProperty('title',searching);
 			
 			var m = set.getEach('title');
 			
-			console.log(m);
-			console.log(set);
+
 			var result = set.findProperty('title',searching);
 			
 			Asprouttrailer.mostPopularController.set('content',result);
@@ -184,9 +178,7 @@ SC.mixin(Asprouttrailer, {
 			//Asprouttrailer.justAddedPage.mainPane.justAdded.topLeftView.itunesList.contentView.set('contentBinding','Asprouttrailer.mostPopularResults.arrangedObjects');
 			
 			//console.log(set);
-			console.log(result);
-				
-			console.log(searching);
+
 			//console.log(tmp);
 			
 		},
@@ -195,16 +187,29 @@ SC.mixin(Asprouttrailer, {
 			console.log('show');
 			Asprouttrailer.moviesController.set('showiTunesreview',true);
 			
-			var posterImages = Asprouttrailer.mostPopularSelection.get('poster');
-			var movieLink = Asprouttrailer.mostPopularSelection.get('moviesite');
+			var posterImages = Asprouttrailer.leftListResultsSelectionController.get('poster');
+			var movieLink = Asprouttrailer.leftListResultsSelectionController.get('moviesite');
 			//movieLink.toString();
+			
+			console.log(posterImages);
+			console.log(movieLink);
+			
+			if(movieLink === undefined)
+			{
+				Asprouttrailer.leftListSearchResultsController.set('movieWebSite','');
+				movieLink = '';
+			}
+			else{
 			movieLink.replace("com/"," ");
 			console.log(movieLink);
 			
 		
 			var movieWebSite = '<a href='+ movieLink +'>' + movieLink;
 			
-			Asprouttrailer.mostPopularSelection.set('movieWebSite',movieWebSite);
+			console.log(movieWebSite);
+			
+			Asprouttrailer.leftListSearchResultsController.set('movieWebSite',movieWebSite);
+			};
 
 		
 			console.log(posterImages);
@@ -222,10 +227,10 @@ SC.mixin(Asprouttrailer, {
 			console.log(backgroundImage);
 			
 			//setting extra Large Image
-			Asprouttrailer.mostPopularSelection.set('extraLargeImage',xLargeImage);
+			Asprouttrailer.leftListResultsSelectionController.set('extraLargeImage',xLargeImage);
 			
 			//backgroundImage for Trailer
-			Asprouttrailer.mostPopularSelection.set('backgroundTrailerImage',backgroundImage);
+			Asprouttrailer.leftListResultsSelectionController.set('backgroundTrailerImage',backgroundImage);
 			
 			//Start animation for description of movie
 			this.invokeLater(this.trailerAnimation,500);

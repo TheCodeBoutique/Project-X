@@ -12,18 +12,18 @@
 */
 Asprouttrailer.subTrailersController = SC.ArrayController.create({	
 
-	contentBinding:'Asprouttrailer.mostPopularSelection.trailers'
+	contentBinding:'Asprouttrailer.leftListResultsSelectionController.trailers'
 	
 });
 Asprouttrailer.genreController = SC.ArrayController.create({	
 
-	contentBinding:'Asprouttrailer.mostPopularSelection.genre'
+	contentBinding:'Asprouttrailer.leftListResultsSelectionController.genre'
 	
 });
 Asprouttrailer.actorsController = SC.ArrayController.create({
 	
 
-	contentBinding:'Asprouttrailer.mostPopularSelection.actors'
+	contentBinding:'Asprouttrailer.leftListResultsSelectionController.actors'
 	
 });
 Asprouttrailer.mostPopularResults = SC.ObjectController.create({
@@ -76,8 +76,22 @@ Asprouttrailer.searchResultsController = SC.ArrayController.create({
 Asprouttrailer.leftListResultsController = SC.ArrayController.create({
 contentBinding:'Asprouttrailer.leftListSearchResultsController.searchContent'
 });
+Asprouttrailer.leftListResultsSelectionController = SC.ObjectController.create({
+contentBinding:'Asprouttrailer.leftListSearchResultsController.selection',
+
+extraLargeImage:'',
+backgroundTrailerImage:'',
+movieWebSite:'',
+
+});
 Asprouttrailer.leftListSearchResultsController = SC.ArrayController.create({
 	contentBinding: 'Asprouttrailer.mostPopularController.content',
+	
+	trailer:null,
+	currentTime:null,
+	extraLargeImage:'',
+	backgroundTrailerImage:'',
+	movieWebSite:'',
 	
 	// search stuff
 	    search: null,
@@ -110,9 +124,8 @@ Asprouttrailer.leftListSearchResultsController = SC.ArrayController.create({
 	          if (currSearchFields.match(search)) searchArray.push(currItem);
 	        }
 
-	        this.set('searchContent', searchArray);
-					
-	      }
+	        this.set('searchContent', searchArray);	
+					      }
 	    },
 
 

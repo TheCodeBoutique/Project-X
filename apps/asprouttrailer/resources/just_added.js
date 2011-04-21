@@ -131,7 +131,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 		
 				detail:SC.View.design({
 				    layout:{top:0,bottom:0,right:0,left:0},
-				    childViews:'background directors moreInfoButton playTrailer actors genre moviesite studio'.w(),
+				    childViews:'background directors actors genre moviesite studio'.w(),
 						
 							directors: SC.LabelView.design({
 												classNames:['itunesFont'],
@@ -139,7 +139,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 										    controlSize: SC.AUTO_CONTROL_SIZE,
                         escapeHTML: NO,
 										    isTextSelectable: YES,
-										    valueBinding:'Asprouttrailer.mostPopularSelection.directors'
+										    valueBinding:'Asprouttrailer.leftListResultsSelectionController.directors'
 										  	}),
 												actors: SC.LabelView.design({
 																	classNames:['itunesFont'],
@@ -164,7 +164,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 																									    layout: { top:75, height: 340, right:0.1, width: 280 },
 																									    //controlSize: SC.AUTO_CONTROL_SIZE,
 															                        escapeHTML: NO,
-																									    valueBinding:'Asprouttrailer.mostPopularSelection.movieWebSite'
+																									    valueBinding:'Asprouttrailer.leftListResultsSelectionController.movieWebSite'
 																									  	}),
 																											studio:SC.LabelView.design({
 																																classNames:['itunesFont'],
@@ -173,7 +173,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 																				                        escapeHTML: NO,
 																														    isTextSelectable: YES,
 																																isTextArea:YES,
-																														    valueBinding:'Asprouttrailer.mostPopularSelection.studio'
+																														    valueBinding:'Asprouttrailer.leftListResultsSelectionController.studio'
 																														  	}),
 																						
 																
@@ -181,32 +181,14 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 															//classNames:['sprout'],
 															layout: { top: 0, bottom:0, left:0, right: 0 },
 															useImageQueue: NO, 
-															valueBinding: 'Asprouttrailer.mostPopularSelection.backgroundTrailerImage',
+															valueBinding: 'Asprouttrailer.leftListResultsSelectionController.backgroundTrailerImage',
 												    }),
 														poster: SC.ImageView.design({
 																//classNames:['sprout'],
 																layout: { left:10, top:25, height:350, width: 240 },
 																useImageQueue: NO, 
-																valueBinding: 'Asprouttrailer.mostPopularSelection.extraLargeImage',
+																valueBinding: 'Asprouttrailer.leftListResultsSelectionController.extraLargeImage',
 													    	}),
-																playTrailer:SC.ButtonView.design({
-																        layout: { centerX: 40, height: 40, centerY:0, width: 100 },
-																        title:  "Custom Play",
-																				controlSize: SC.JUMBO_CONTROL_SIZE,
-																				isVisibleBinding:'Asprouttrailer.mostPopularSelection.isShowingMoreInfo',
-																				//target: "ScCommunityMarketing.betaController",
-																				//action: "addTask",
-																				isDefault: YES
-																     		}),
-																moreInfoButton: SC.ButtonView.design({
-																        layout: { bottom:10, height: 24, right: 10, width: 100 },
-																        title:  "arrow",
-																				controlSize: SC.REGULAR_CONTROL_SIZE,
-																				isVisibleBinding:'Asprouttrailer.mostPopularSelection.isShowingMoreInfo'
-																				//target: "ScCommunityMarketing.betaController",
-																				//action: "addTask",
-																				//isDefault: YES
-																      	}),
 													}),//end of detail
 														
 				topBar: SC.ToolbarView.design({
@@ -302,10 +284,17 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 		
 		navigationBar: SC.ToolbarView.design({
 		  layout: { top: 0, left: 0, right: 0, height: 45 },  
-			  childViews:'justAdded mostPopular search trailerQueue trailersAdded results'.w(),
+			  childViews:'justAdded mostPopular search trailerQueue trailersAdded results netflix'.w(),
 				
+				netflix: SC.LabelView.design({
+							    layout: { centerY: 0, height: 30, right: 100, width: 200 },
+							    controlSize: SC.LARGE_CONTROL_SIZE,
+							    fontWeight: SC.BOLD_WEIGHT,
+				          escapeHTML: NO,
+							    value:'Netflix'
+							  	}),
 				results:SC.LabelView.design({
-							    layout: { centerY: 0, height: 30, right: 300, width: 250 },
+							    layout: { centerY: 0, height: 30, centerX:0, width: 95 },
 							    controlSize: SC.LARGE_CONTROL_SIZE,
 							    fontWeight: SC.BOLD_WEIGHT,
 				          escapeHTML: NO,
@@ -331,7 +320,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 					            //action: "_searchHasChanged",
 											mouseEntered: function(evt) {
 												        this.animate('width',200,{duration:.5, timing:'ease-in-out'});
-																return YES,
+																return YES
 												    },
 					            keyDown: function(evt) {
 					              sc_super(); // necessary to guarantee regular handling of keyDown events, 
@@ -475,29 +464,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 																								  },
 																									mouseUp: function(evt) {
 																									    // apply one more time to set final position
-																									    var tmp = this.mouseDragged(evt); 
-																									    var info = this._mouseDownInfo; // cleanup info
-																											console.log(info.width);
-																											console.log(info.height);
-																											var infoHeight =  info.width;
-																											var infoWidth = info.height;
-																											
-																											var layout = this.get('layout');
-																											console.log(layout);
-																											var newHeight = layout.height;
-																											var newWidth = layout.width;
-																											console.log(newHeight);
-																											console.log(newWidth);
-																											
-																											pane.set(infoHeight,newWidth);
-																											pane.set(infoWidth,newWidth);																									
-																					
-																											this.set(infoHeight,newWidth);
-																											this.set(infoWidth,newWidth);																									
-																					
-																											view.set(infoHeight,newWidth);
-																											view.set(infoWidth,newWidth);																									
-																					
+																										
 																									    return YES; // handled!
 																									  },
 																										mouseDragged: function(evt) {
@@ -830,7 +797,7 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 																											              }
 																											            }
 																																}),
-													itunesTopBar:	SC.ToolbarView.design({
+/*start of itunes bar left*/			itunesTopBar:	SC.ToolbarView.design({
 																						classNames:['itunesTopBar'],
 																						layout: { top: 295, left: 0, right: 0, height: 25 },  
 																						childViews:'total summary itunesLoading search'.w(),
@@ -887,8 +854,8 @@ Asprouttrailer.justAddedPage = SC.Page.design({
 																														classNames: ['sc-list-item-view'],
 																														contentValueKey: "title",
 																														contentIconKey: "poster",
-																														contentBinding: "Asprouttrailer.mostPopularController.arrangedObjects",
-																														selectionBinding: "Asprouttrailer.mostPopularController.selection",
+																														contentBinding: "Asprouttrailer.leftListResultsController.arrangedObjects",
+																														selectionBinding: "Asprouttrailer.leftListResultsController.selection",
 																														hasContentIcon:  YES,
 																														exampleView:Asprouttrailer.TrailersListItemView,
 																						                escapeHTML: NO,
